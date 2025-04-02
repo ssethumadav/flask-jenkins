@@ -4,13 +4,13 @@ pipeline {
     environment {
         DOCKER_IMAGE = 'my-ecommerce-backend'
         DOCKER_TAG = "${BUILD_NUMBER}"
-        REGISTRY = 'harishkoppineni/my-ecommerce'
+        REGISTRY = 'ssethumadav/my-ecommerce'
     }
 
     stages {
         stage('Checkout Code') {
             steps {
-                git url: 'https://github.com/arjunkoppineni/flask-jenkins.git', branch: 'main'
+                git url: 'https://github.com/ssethumadav/flask-jenkins.git', branch: 'main'
             }
         }
 
@@ -25,7 +25,7 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 script {
-                    withDockerRegistry([credentialsId: 'docker-hub-cred', url: '']) {
+                    withDockerRegistry([credentialsId: 'dockerhub-credentials', url: '']) {
                         sh "docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${REGISTRY}:${DOCKER_TAG}"
                         sh "docker push ${REGISTRY}:${DOCKER_TAG}"
                     }
